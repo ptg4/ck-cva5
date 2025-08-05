@@ -22,6 +22,7 @@ module xilinx_wrapper
 
         //(from XILINX)
         //TODO: Figure out how memory managment should work in this configuration
+        //unsused?
         local_memory_interface.master instruction_bram[NUM_CORES-1:0](),
         local_memory_interface.master data_bram[NUM_CORES-1:0](),
 
