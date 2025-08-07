@@ -109,9 +109,9 @@ if {[string equal [get_filesets -quiet sources_1] ""]} {
   create_fileset -srcset sources_1
 }
 
-#import all sources from taiga repo directory
+#import all sources from cva5 repo directory
 #Zavier: Eric says we only want the wrapper, and whatever type/interface file we need at first.
-#The reasoning is: less files ati ntial package, less worry 
+#The reasoning is: less files ati ntial package, less worry
 #import_files -fileset [get_filesets sources_1] $origin_dir/core
 #import_files -fileset [get_filesets sources_1] $origin_dir/l2_arbiter
 #import_files -fileset [get_filesets sources_1] $origin_dir/local_memory
@@ -150,7 +150,7 @@ set_property -name "top_auto_set" -value "0" -objects $obj
 set_property -name "top_file" -value " ${origin_dir}/core/cva5_abacus_wrapper_xilinx.sv" -objects $obj
 
 
-# Remove interface files for taiga 
+# Remove interface files for cva5 
 puts "INFO: Project created:${_xil_proj_name_}"
 
 #Removal of SystemVerilog interface files, so initial IP packaging can be done
@@ -260,7 +260,7 @@ set_property core_revision 3 [ipx::current_core]
 ipx::create_xgui_files [ipx::current_core]
 ipx::update_checksums [ipx::current_core]
 ipx::save_core [ipx::current_core]
-current_project taiga_wrapper_IP
+current_project cva5_abacus_wrapper_IP
 set_property "ip_repo_paths" "[file normalize "$origin_dir/cva5_abacus_wrapper_IP"]" $obj
 update_ip_catalog -rebuild
 
