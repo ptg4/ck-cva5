@@ -127,6 +127,21 @@ import_files -norecurse $origin_dir/../../core/types_and_interfaces/cva5_types.s
 import_files -norecurse $origin_dir/../../core/types_and_interfaces/csr_types.sv -force
 import_files -norecurse $origin_dir/../../core/types_and_interfaces/fpu_types.sv -force
 
+#import_files does not seem to add files to the packaging
+# Add all relevant HDL files before packaging
+set hdl_files [list \
+    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/xilinx/xilinx_wrapper.sv" \
+    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/external_interfaces.sv" \
+    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/cva5_config.sv" \
+    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/riscv_types.sv" \
+    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/cva5_types.sv" \
+    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/csr_types.sv" \
+    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/fpu_types.sv" \
+]
+
+add_files -norecurse $hdl_files
+update_compile_order -fileset sources_1
+
 # Set IP repository paths
 set obj [get_filesets sources_1]
 set_property "ip_repo_paths" "[file normalize "$origin_dir/cva5_abacus_wrapper_IP"]" $obj
