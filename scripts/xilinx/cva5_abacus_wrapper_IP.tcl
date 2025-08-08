@@ -127,7 +127,6 @@ import_files -norecurse $origin_dir/../../core/types_and_interfaces/cva5_types.s
 import_files -norecurse $origin_dir/../../core/types_and_interfaces/csr_types.sv -force
 import_files -norecurse $origin_dir/../../core/types_and_interfaces/fpu_types.sv -force
 
-#import_files does not seem to add files to the packaging
 # Add all relevant HDL files before packaging
 set hdl_files [list \
     "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/xilinx/xilinx_wrapper.sv" \
@@ -139,7 +138,13 @@ set hdl_files [list \
     "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/fpu_types.sv" \
 ]
 
-add_files -norecurse $hdl_files
+#Handle to current IP core
+set ip_core [ipx::current_core]
+#Registering each file in hdl_files to the IP core
+foreach f $hdl_files{
+  ipx::add_file -file_type SystemVerilogSource -group xilinx_anylanguagesynthesis $f $ip_core
+}
+
 update_compile_order -fileset sources_1
 
 # Set IP repository paths

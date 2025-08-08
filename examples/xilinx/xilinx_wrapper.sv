@@ -72,7 +72,7 @@ module xilinx_wrapper
         output logic m_axi_bready,
         input logic m_axi_bvalid,
         input logic [1:0] m_axi_bresp,
-        input logic [5:0] m_axi_bid
+        input logic [5:0] m_axi_bid,
 
         //ABACUS //(from LITEX-ABACUS)
         output logic [31:0] abacus_instruction,
