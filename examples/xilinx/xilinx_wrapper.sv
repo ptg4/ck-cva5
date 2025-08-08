@@ -20,9 +20,6 @@ module xilinx_wrapper
         input logic clk,
         input logic rst,
 
-        local_memory_interface.master instruction_bram[NUM_CORES-1:0],
-        local_memory_interface.master data_bram[NUM_CORES-1:0],
-
         //(from LITEX-ABACUS)
         //TODO: Figure out how interrupts should work in this configuration
         input logic [NUM_CORES-1:0] meip,
@@ -113,6 +110,8 @@ module xilinx_wrapper
     avalon_interface m_avalon[NUM_CORES-1:0]();
     wishbone_interface dwishbone[NUM_CORES-1:0]();
     wishbone_interface iwishbone[NUM_CORES-1:0]();
+    local_memory_interface instruction_bram[NUM_CORES-1:0]();
+    local_memory_interface data_bram[NUM_CORES-1:0]();
 
     //(LITEX-ABACUS)
     ////Interrupts
@@ -231,7 +230,15 @@ module xilinx_wrapper
             NUM_WB_GROUPS : 3,
             WB_GROUP : STANDARD_WB_GROUP_CONFIG
         };
-        .instruction_bram(instruction_bram[i]),
+        assign m_interrupt[i].software = msip[i];
+        assign m_interrupt[i].timer = mtip[i];
+        assign m_interrupt[i].external = meip[i];
+        assign s_interrupt[i].software = 0; //Not possible
+        assign s_interrupt[i].timer = 0; //Internal
+        assign s_interrupt[i].external = seip[i];
+
+        cva5 #(.CONFIG(STANDARD_CONFIG_I)) cpu(
+            .instruction_bram(instruction_bram[i]),
             .data_bram(data_bram[i]),
             .m_axi(m_axi[i]),
             .m_avalon(m_avalon[i]),

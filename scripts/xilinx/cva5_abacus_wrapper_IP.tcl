@@ -111,7 +111,7 @@ if {[string equal [get_filesets -quiet sources_1] ""]} {
 
 #import all sources from cva5 repo directory
 #Zavier: Eric says we only want the wrapper, and whatever type/interface file we need at first.
-#The reasoning is: less files ati ntial package, less worry
+#The reasoning is: less files at intial package, less worry
 #import_files -fileset [get_filesets sources_1] $origin_dir/core
 #import_files -fileset [get_filesets sources_1] $origin_dir/l2_arbiter
 #import_files -fileset [get_filesets sources_1] $origin_dir/local_memory
@@ -127,25 +127,6 @@ import_files -norecurse $origin_dir/../../core/types_and_interfaces/cva5_types.s
 import_files -norecurse $origin_dir/../../core/types_and_interfaces/csr_types.sv -force
 import_files -norecurse $origin_dir/../../core/types_and_interfaces/fpu_types.sv -force
 
-# Add all relevant HDL files before packaging
-set hdl_files [list \
-    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/xilinx/xilinx_wrapper.sv" \
-    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/external_interfaces.sv" \
-    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/cva5_config.sv" \
-    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/riscv_types.sv" \
-    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/cva5_types.sv" \
-    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/csr_types.sv" \
-    "$proj_dir/cva5_abacus_wrapper_IP.srcs/sources_1/imports/types_and_interfaces/fpu_types.sv" \
-]
-
-#Handle to current IP core
-set ip_core [ipx::current_core]
-#Registering each file in hdl_files to the IP core
-foreach f $hdl_files{
-  ipx::add_file -file_type SystemVerilogSource -group xilinx_anylanguagesynthesis $f $ip_core
-}
-
-update_compile_order -fileset sources_1
 
 # Set IP repository paths
 set obj [get_filesets sources_1]
