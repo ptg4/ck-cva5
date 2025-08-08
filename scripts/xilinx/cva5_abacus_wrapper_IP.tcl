@@ -35,7 +35,7 @@ if { [info exists ::user_project_name] } {
 }
 
 variable script_file
-set script_file "cva5_abacus_wrapper.tcl"
+set script_file "cva5_abacus_wrapper_IP.tcl"
 
 # Help information for this script
 proc print_help {} {
@@ -145,9 +145,9 @@ update_ip_catalog -rebuild
 
 # Set 'sources_1' fileset properties
 set obj [get_filesets sources_1]
-set_property -name "top" -value "cva5_abacus_wrapper_xilinx" -objects $obj
+set_property -name "top" -value "xilinx_wrapper" -objects $obj
 set_property -name "top_auto_set" -value "0" -objects $obj
-set_property -name "top_file" -value " ${origin_dir}/core/cva5_abacus_wrapper_xilinx.sv" -objects $obj
+set_property -name "top_file" -value " ${origin_dir}/core/xilinx_wrapper.sv" -objects $obj
 
 
 # Remove interface files for cva5 
