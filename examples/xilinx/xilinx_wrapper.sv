@@ -4,7 +4,7 @@ module xilinx_wrapper
 
     import cva5_config::*;
     import cva5_types::*;
-    import l2_config_and_types::*; //haven't decided if i need this yet
+    //import l2_config_and_types::*; //haven't decided if i need this yet
 
     //Parameters: (from LITEX-ABACUS)
     #(
@@ -20,11 +20,8 @@ module xilinx_wrapper
         input logic clk,
         input logic rst,
 
-        //(from XILINX)
-        //TODO: Figure out how memory managment should work in this configuration
-        //unsused?
-        local_memory_interface.master instruction_bram[NUM_CORES-1:0](),
-        local_memory_interface.master data_bram[NUM_CORES-1:0](),
+        local_memory_interface.master instruction_bram[NUM_CORES-1:0],
+        local_memory_interface.master data_bram[NUM_CORES-1:0],
 
         //(from LITEX-ABACUS)
         //TODO: Figure out how interrupts should work in this configuration
